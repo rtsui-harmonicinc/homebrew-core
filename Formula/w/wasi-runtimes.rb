@@ -2,8 +2,8 @@ class WasiRuntimes < Formula
   desc "Compiler-RT and libc++ runtimes for WASI"
   homepage "https://wasi.dev"
   # TODO: update targets and other steps when wasi-sdk-34 / wasi-libc 34 is stable
-  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-22.1.8/llvm-project-22.1.8.src.tar.xz"
-  sha256 "922f1817a0df7b1489272d18134ee0087a8b068828f87ac63b9861b1a9965888"
+  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.0-rc3/llvm-project-23.1.0-rc3.src.tar.xz"
+  sha256 "15796d21e2c5818895edf06a46d7748972b0cb799a499112045b056972f9984b"
   license "Apache-2.0" => { with: "LLVM-exception" }
   head "https://github.com/llvm/llvm-project.git", branch: "main"
 
@@ -29,6 +29,13 @@ class WasiRuntimes < Formula
   depends_on "llvm"
 
   uses_from_macos "python" => :build
+
+  # Apply patch from wasi-sdk to fix build with LLVM 23+
+  patch do
+    url "https://raw.githubusercontent.com/WebAssembly/wasi-sdk/6911d9135dd3209083450d6a354e7e497e3a736e/src/llvm-undo-part-of-194317.patch"
+    sha256 "bd901d86af8f1e000aa7efeb4e3d3677292fe07a106e817b09a0a67124a7ad00"
+    type :unofficial
+  end
 
   def wasi_sdk_targets
     # See targets at: https://github.com/WebAssembly/wasi-sdk/blob/wasi-sdk-33/CMakeLists.txt#L14
