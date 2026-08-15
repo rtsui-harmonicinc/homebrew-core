@@ -1,8 +1,8 @@
 class Lldb < Formula
   desc "Next generation, high-performance debugger"
   homepage "https://lldb.llvm.org/"
-  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-22.1.8/llvm-project-22.1.8.src.tar.xz"
-  sha256 "922f1817a0df7b1489272d18134ee0087a8b068828f87ac63b9861b1a9965888"
+  url "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.0-rc3/llvm-project-23.1.0-rc3.src.tar.xz"
+  sha256 "15796d21e2c5818895edf06a46d7748972b0cb799a499112045b056972f9984b"
   license "Apache-2.0" => { with: "LLVM-exception" }
   head "https://github.com/llvm/llvm-project.git", branch: "main"
 
@@ -19,8 +19,7 @@ class Lldb < Formula
     sha256 cellar: :any, x86_64_linux:  "4ebf5aa7814723780cd37f110c67d2d2681f2d4d016269f4f943aabd4bbfa0e0"
   end
 
-  # TODO: keg_only :provided_by_macos
-  keg_only "LLDB is provided by `llvm` until LLVM 23"
+  keg_only :provided_by_macos
 
   # https://lldb.llvm.org/resources/build.html
   depends_on "cmake" => :build
@@ -47,13 +46,6 @@ class Lldb < Formula
   def install
     # Features are set ON/OFF to avoid auto-detection impacting reproducibility.
     # See https://lldb.llvm.org/resources/build.html#optional-dependencies
-    #
-    # We install the lldb Python module into libexec to prevent users from
-    # accidentally importing it with a non-Homebrew Python or a Homebrew Python
-    # in a non-default prefix. See https://lldb.llvm.org/resources/caveats.html
-    #
-    # TODO: Try removing LLDB_PYTHON_RELATIVE_PATH in LLDB 23 as upstream no longer links on macOS:
-    # https://github.com/llvm/llvm-project/commit/3eb13f8db39ed42827122489c830c414cb6660e3
     args = %W[
       -DLLDB_ENABLE_CURSES=ON
       -DLLDB_ENABLE_LIBEDIT=ON
@@ -63,7 +55,6 @@ class Lldb < Formula
       -DLLDB_ENABLE_PYTHON=ON
       -DLLDB_ENABLE_TREESITTER=OFF
       -DLLDB_INCLUDE_TESTS=OFF
-      -DLLDB_PYTHON_RELATIVE_PATH=libexec/#{Language::Python.site_packages(python3).delete_prefix("lib/")}
       -DLLDB_USE_SYSTEM_DEBUGSERVER=ON
       -DLLVM_DIR=#{formula_opt_lib(name.sub("lldb", "llvm"))}/cmake/llvm
       -DLLVM_ENABLE_LTO=ON
