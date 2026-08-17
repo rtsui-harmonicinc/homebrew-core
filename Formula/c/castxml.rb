@@ -2,7 +2,7 @@ class Castxml < Formula
   desc "C-family Abstract Syntax Tree XML Output"
   homepage "https://github.com/CastXML/CastXML"
   license "Apache-2.0"
-  revision 1
+  revision 2
   head "https://github.com/CastXML/castxml.git", branch: "master"
 
   stable do
