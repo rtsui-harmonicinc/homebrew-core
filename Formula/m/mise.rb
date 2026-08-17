@@ -33,6 +33,9 @@ class Mise < Formula
     depends_on "openssl@3"
   end
 
+  # downloads crates
+  deny_network_access! [:postinstall, :test]
+
   def install
     # Ensure that the `openssl` crate picks up the intended library.
     ENV["OPENSSL_DIR"] = formula_opt_prefix("openssl@3")
