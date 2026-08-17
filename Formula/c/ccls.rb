@@ -7,7 +7,7 @@ class Ccls < Formula
   #       https://github.com/MaskRay/ccls/issues/786
   #       https://github.com/MaskRay/ccls/issues/895
   license "Apache-2.0"
-  revision 1
+  revision 2
   head "https://github.com/MaskRay/ccls.git", branch: "master"
 
   stable do
