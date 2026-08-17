@@ -2,7 +2,7 @@ class Alive2 < Formula
   desc "Automatic verification of LLVM optimizations"
   homepage "https://github.com/AliveToolkit/alive2"
   license "MIT"
-  revision 6
+  revision 7
   head "https://github.com/AliveToolkit/alive2.git", branch: "master"
 
   stable do
