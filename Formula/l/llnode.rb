@@ -4,6 +4,7 @@ class Llnode < Formula
   url "https://github.com/nodejs/llnode/archive/refs/tags/v4.0.0.tar.gz"
   sha256 "abc295c077443f823444faffb165ada4c6ca377f2b1af4c002e8a9eea0f30135"
   license "MIT"
+  revision 1
 
   bottle do
     sha256 cellar: :any,                 arm64_tahoe:    "587328e971d8e18f42e15a58c9d1c94efe7cc2e48663d34de95e19a2921f7179"
@@ -21,20 +22,20 @@ class Llnode < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "343c83b8b3a42ad4496c3866dda8da056a4cea95a09bebdec3280cbe3c301484"
   end
 
-  depends_on "llvm" => :build
+  depends_on "lldb" => :build
   depends_on "node" => [:build, :test]
 
-  uses_from_macos "llvm"
+  uses_from_macos "lldb"
 
   def llnode_so(root = lib)
     root/"llnode"/shared_library("llnode")
   end
 
   def install
-    ENV.append_path "PATH", Formula["node"].libexec/"lib/node_modules/npm/node_modules/node-gyp/bin"
+    ENV.append_path "PATH", formula_opt_libexec("node")/"lib/node_modules/npm/node_modules/node-gyp/bin"
     inreplace "Makefile", "node-gyp", "node-gyp.js"
 
-    ENV["LLNODE_LLDB_INCLUDE_DIR"] = formula_opt_include("llvm")
+    ENV["LLNODE_LLDB_INCLUDE_DIR"] = formula_opt_include("lldb")
     system "make", "plugin"
     bin.install "llnode.js" => "llnode"
     llnode_so.dirname.install shared_library("llnode")
