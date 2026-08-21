@@ -1,8 +1,8 @@
 class Pkcs11Tools < Formula
   desc "Tools to manage objects on PKCS#11 crypotographic tokens"
   homepage "https://github.com/Mastercard/pkcs11-tools"
-  url "https://github.com/Mastercard/pkcs11-tools/releases/download/v3.0.0/pkcs11-tools-3.0.0.tar.gz"
-  sha256 "da87f7371be0c94e6ae11cb65c033fbdc9be5549430b7c6f7a90abca200dcfcf"
+  url "https://github.com/Mastercard/pkcs11-tools/archive/refs/tags/v3.1.0.tar.gz"
+  sha256 "3c154b21c82a38e434b302cb51aefbacd3b7de20854ccd26318a551a72985e17"
   license "Apache-2.0"
 
   livecheck do
@@ -25,14 +25,6 @@ class Pkcs11Tools < Formula
 
   uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
-
-  # Add `x` permissions to `with_pkcs11_common` script
-  patch do
-    url "https://github.com/Mastercard/pkcs11-tools/commit/13154703de39827c791c8e11e1a43e23edec2894.patch?full_index=1"
-    sha256 "4e5fd88dc06c6376c1ced8ddd60346368b2723a062920189d082ac61a4ce45ce"
-    type :backport
-    resolves "https://github.com/Mastercard/pkcs11-tools/issues/85"
-  end
 
   # Fix Linux build error using gnulib upstream commit.
   # ../gl/string.h:965:1: error: expected ',' or ';' before '_GL_ATTRIBUTE_MALLOC'
